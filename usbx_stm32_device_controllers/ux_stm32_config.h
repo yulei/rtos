@@ -27,7 +27,7 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "general_hal.h"
+#include "generic_hal.h"
 
 /* USER CODE BEGIN Private Includes */
 

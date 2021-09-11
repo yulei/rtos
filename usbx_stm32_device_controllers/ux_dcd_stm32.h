@@ -113,6 +113,11 @@ typedef struct UX_DCD_STM32_STRUCT
                         *ux_dcd_stm32_dcd_owner;
     struct UX_DCD_STM32_ED_STRUCT
                         ux_dcd_stm32_ed[UX_DCD_STM32_MAX_ED];
+
+#ifdef UX_DEVICE_BIDIRECTIONAL_ENDPOINT_SUPPORT
+    struct UX_DCD_STM32_ED_STRUCT              
+                        ux_dcd_stm32_ed_in[UX_DCD_STM32_MAX_ED];
+#endif
     PCD_HandleTypeDef   *pcd_handle;
 } UX_DCD_STM32;
 

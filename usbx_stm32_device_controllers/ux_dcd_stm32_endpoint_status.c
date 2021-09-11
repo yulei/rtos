@@ -78,9 +78,22 @@ UINT  _ux_dcd_stm32_endpoint_status(UX_DCD_STM32 *dcd_stm32, ULONG endpoint_inde
 
 UX_DCD_STM32_ED      *ed;
 
+#ifdef UX_DEVICE_BIDIRECTIONAL_ENDPOINT_SUPPORT
+    /* Fetch the address of the physical endpoint.  */
+    if ((endpoint_index & ~UX_ENDPOINT_DIRECTION) == 0) {
+        ed = &dcd_stm32 -> ux_dcd_stm32_ed[0];
+    } else {
+        if (endpoint_index & UX_ENDPOINT_DIRECTION) {
+            ed = &dcd_stm32 -> ux_dcd_stm32_ed_in[endpoint_index&0x0F];
+        } else {
+            ed = &dcd_stm32 -> ux_dcd_stm32_ed[endpoint_index&0x0F];
+        }
+    }
+#else
 
     /* Fetch the address of the physical endpoint.  */
     ed =  &dcd_stm32 -> ux_dcd_stm32_ed[endpoint_index];
+#endif
 
     /* Check the endpoint status, if it is free, we have a illegal endpoint.  */
     if ((ed -> ux_dcd_stm32_ed_status & UX_DCD_STM32_ED_STATUS_USED) == 0)

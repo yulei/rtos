@@ -83,8 +83,19 @@ ULONG               stm32_endpoint_index;
     /* The endpoint index in the array of the STM32 must match the endpoint number.  */
     stm32_endpoint_index =  endpoint -> ux_slave_endpoint_descriptor.bEndpointAddress & ~UX_ENDPOINT_DIRECTION;
 
-    /* Fetch the address of the physical endpoint.  */
+#ifdef UX_DEVICE_BIDIRECTIONAL_ENDPOINT_SUPPORT
+    if (stm32_endpoint_index == 0) {
+        ed = &dcd_stm32 -> ux_dcd_stm32_ed[0];
+    } else {
+        if (endpoint -> ux_slave_endpoint_descriptor.bEndpointAddress & UX_ENDPOINT_DIRECTION) {
+            ed = &dcd_stm32 -> ux_dcd_stm32_ed_in[stm32_endpoint_index];
+        } else {
+            ed = &dcd_stm32 -> ux_dcd_stm32_ed[stm32_endpoint_index];
+        }
+    }
+#else
     ed =  &dcd_stm32 -> ux_dcd_stm32_ed[stm32_endpoint_index];
+#endif
 
     /* Check the index range and endpoint status, if it is free, reserve it. If not reject this endpoint.  */
     if ((stm32_endpoint_index < UX_DCD_STM32_MAX_ED) && ((ed -> ux_dcd_stm32_ed_status & UX_DCD_STM32_ED_STATUS_USED) == 0))

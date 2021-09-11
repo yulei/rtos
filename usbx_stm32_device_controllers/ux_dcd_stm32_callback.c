@@ -252,7 +252,15 @@ UX_SLAVE_ENDPOINT       *endpoint;
     dcd_stm32 = (UX_DCD_STM32 *) dcd -> ux_slave_dcd_controller_hardware;
 
     /* Fetch the address of the physical endpoint.  */
+#ifdef UX_DEVICE_BIDIRECTIONAL_ENDPOINT_SUPPORT
+    if ((epnum & 0x0F) == 0) {
+        ed =  &dcd_stm32 -> ux_dcd_stm32_ed[epnum & 0xF];
+    } else {
+        ed =  &dcd_stm32 -> ux_dcd_stm32_ed_in[epnum & 0xF];
+    }
+#else
     ed =  &dcd_stm32 -> ux_dcd_stm32_ed[epnum & 0xF];
+#endif
 
     /* Get the pointer to the transfer request.  */
     transfer_request =  &(ed -> ux_dcd_stm32_ed_endpoint -> ux_slave_endpoint_transfer_request);
@@ -407,6 +415,7 @@ UX_SLAVE_ENDPOINT       *endpoint;
     dcd_stm32 = (UX_DCD_STM32 *) dcd -> ux_slave_dcd_controller_hardware;
 
     /* Fetch the address of the physical endpoint.  */
+
     ed =  &dcd_stm32 -> ux_dcd_stm32_ed[epnum & 0xF];
 
     /* Get the pointer to the transfer request.  */

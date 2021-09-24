@@ -13,3 +13,6 @@
 [submodule "levelx"]
 	path = levelx
 	url = https://github.com/azure-rtos/levelx.git
+[submodule "guix"]
+	path = guix
+	url = https://github.com/azure-rtos/guix.git

@@ -7,9 +7,6 @@
 [submodule "filex"]
 	path = filex
 	url = https://github.com/azure-rtos/filex.git
-[submodule "freertos/kernel"]
-	path = freertos/kernel
-	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git
 [submodule "levelx"]
 	path = levelx
 	url = https://github.com/azure-rtos/levelx.git
